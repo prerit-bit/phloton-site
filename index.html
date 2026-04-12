@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phloton — Smart Active Cooling for Last-Mile Cold Chain</title>
+<meta name="description" content="Phloton by Enhanced Innovations: AI-powered, solar-ready active cooling carriers that eliminate cold chain failures for vaccines, medicines, blood products, and research specimens.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #00C9A7;
+  --teal-dark: #00A88A;
+  --navy: #F7F8FA;         /* was #0A1628 — now off-white bg */
+  --navy-light: #EEF1F5;   /* was #12203A — now light gray bg */
+  --navy-mid: #E4E8EE;     /* was #162848 — now mid gray */
+  --white: #1A1A2E;         /* was #FFFFFF — now dark text */
+  --gray-100: #F0F4F8;
+  --gray-200: #D1D9E6;
+  --gray-300: #6B7C93;      /* was #9FB3C8 — now darker for readability */
+  --gray-400: #4A5568;      /* was #627D98 — now darker for light bg */
+  --accent-blue: #3B82F6;
+  --accent-violet: #8B5CF6;
+  --accent-rose: #E53E3E;
+  --accent-amber: #D69E2E;
+  --gradient-teal: linear-gradient(135deg, #00C9A7 0%, #00A88A 50%, #3B82F6 100%);
+  --gradient-hero: linear-gradient(180deg, #F7F8FA 0%, #EEF1F5 40%, #E4E8EE 100%);
+  --gradient-glow: radial-gradient(ellipse at 50% 0%, rgba(0,201,167,0.1) 0%, transparent 70%);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 700; line-height: 1.15; margin-bottom: 20px;
+}
+.section-desc { font-size: 1.05rem; color: var(--gray-300); line-height: 1.7; max-width: 600px; }
+
+/* ─── NAV ─── */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 16px 0; transition: all 0.4s ease; background: transparent; }
+nav.scrolled { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,201,167,0.12); padding: 10px 0; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-img { height: 32px; width: auto; }
+.logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--white); letter-spacing: -0.5px; }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { color: var(--gray-400); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.3s; }
+.nav-links a:hover { color: var(--teal); }
+.nav-cta { padding: 10px 24px; background: var(--teal); color: var(--navy) !important; border-radius: 50px; font-weight: 600 !important; font-size: 0.85rem !important; transition: all 0.3s !important; }
+.nav-cta:hover { background: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,201,167,0.3); }
+.mobile-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.mobile-toggle span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+/* ─── HERO ─── */
+.hero { min-height: 100vh; display: flex; align-items: center; background: var(--gradient-hero); position: relative; overflow: hidden; padding-top: 80px; }
+.hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 800px; height: 800px; border-radius: 50%; background: radial-gradient(circle, rgba(0,201,167,0.08) 0%, transparent 70%); pointer-events: none; }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,201,167,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,201,167,0.03) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%); }
+.hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,201,167,0.1); border: 1px solid rgba(0,201,167,0.2); border-radius: 50px; padding: 6px 16px 6px 8px; margin-bottom: 28px; font-size: 0.8rem; font-weight: 500; color: var(--teal); }
+.hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); animation: pulse-dot 2s ease infinite; }
+@keyframes pulse-dot { 0%, 100% { box-shadow: 0 0 0 0 rgba(0,201,167,0.4); } 50% { box-shadow: 0 0 0 6px rgba(0,201,167,0); } }
+.hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 24px; }
+.hero h1 .highlight { background: var(--gradient-teal); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { font-size: 1.15rem; color: var(--gray-300); line-height: 1.75; max-width: 520px; margin-bottom: 36px; }
+.hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: var(--teal); color: var(--navy); border-radius: 50px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; }
+.btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,201,167,0.3); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: transparent; color: var(--white); border-radius: 50px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; border: 1px solid rgba(0,0,0,0.15); }
+.btn-secondary:hover { border-color: var(--teal); color: var(--teal); background: rgba(0,201,167,0.05); }
+.hero-stats { display: flex; gap: 40px; margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(0,0,0,0.1); }
+.hero-stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--teal); }
+.hero-stat-label { font-size: 0.8rem; color: var(--gray-400); margin-top: 4px; }
+
+/* Hero product image */
+.hero-right { position: relative; display: flex; justify-content: center; align-items: center; }
+.hero-product-wrap { position: relative; }
+.hero-product-img { width: 100%; max-width: 480px; height: auto; border-radius: 24px; position: relative; z-index: 2; filter: drop-shadow(0 20px 60px rgba(0,201,167,0.15)); }
+.hero-product-glow { position: absolute; inset: -60px; border-radius: 50%; background: radial-gradient(circle, rgba(0,201,167,0.1) 0%, transparent 70%); animation: glow-pulse 4s ease-in-out infinite; z-index: 1; }
+@keyframes glow-pulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
+.float-tag { position: absolute; background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(0,201,167,0.2); backdrop-filter: blur(12px); border-radius: 12px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; font-size: 0.78rem; font-weight: 500; color: var(--gray-300); white-space: nowrap; animation: float 6s ease-in-out infinite; z-index: 3; }
+.float-tag svg { width: 18px; height: 18px; color: var(--teal); flex-shrink: 0; }
+.ft-1 { top: 20px; right: -10px; animation-delay: 0s; }
+.ft-2 { bottom: 100px; right: -30px; animation-delay: 1s; }
+.ft-3 { bottom: 30px; left: -10px; animation-delay: 2s; }
+.ft-4 { top: 90px; left: -20px; animation-delay: 3s; }
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+
+/* ─── PROBLEM ─── */
+.problem { padding: 120px 0; background: var(--navy); position: relative; }
+.problem::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,201,167,0.2), transparent); }
+.problem-header { text-align: center; margin-bottom: 64px; }
+.problem-header .section-desc { margin: 0 auto; }
+.problem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.problem-card { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); border-radius: 20px; padding: 32px 28px; transition: all 0.4s; position: relative; overflow: hidden; }
+.problem-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-teal); opacity: 0; transition: opacity 0.4s; }
+.problem-card:hover { border-color: rgba(0,201,167,0.15); transform: translateY(-4px); }
+.problem-card:hover::before { opacity: 1; }
+.problem-num { font-family: 'Space Grotesk', sans-serif; font-size: 2.8rem; font-weight: 800; background: var(--gradient-teal); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 8px; }
+.problem-unit { font-size: 0.8rem; color: var(--gray-400); font-weight: 500; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+.problem-text { font-size: 0.92rem; color: var(--gray-300); line-height: 1.6; }
+.problem-img { margin-top: 48px; text-align: center; }
+.problem-img img { max-width: 600px; width: 100%; border-radius: 16px; opacity: 0.85; }
+
+/* ─── PRODUCT ─── */
+.product-section { padding: 120px 0; background: var(--navy-light); position: relative; }
+.product-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 80px; }
+.product-gallery { position: relative; }
+.product-main-img { width: 100%; border-radius: 20px; border: 1px solid rgba(0,201,167,0.1); }
+.product-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+.product-thumb { border-radius: 12px; width: 100%; height: 120px; object-fit: cover; border: 1px solid rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; }
+.product-thumb:hover { border-color: var(--teal); transform: scale(1.03); }
+.specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+.spec-item { background: rgba(0,201,167,0.04); border: 1px solid rgba(0,201,167,0.08); border-radius: 14px; padding: 20px; transition: all 0.3s; }
+.spec-item:hover { border-color: rgba(0,201,167,0.2); background: rgba(0,201,167,0.06); }
+.spec-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(0,201,167,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.spec-icon svg { width: 18px; height: 18px; color: var(--teal); }
+.spec-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+.spec-label { font-size: 0.78rem; color: var(--gray-400); }
+
+/* ─── PHLEBOTOMIST SECTION ─── */
+.phleb { padding: 120px 0; background: var(--navy); position: relative; overflow: hidden; }
+.phleb::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(229,62,62,0.04) 0%, transparent 50%), radial-gradient(ellipse at 70% 50%, rgba(0,201,167,0.04) 0%, transparent 50%); pointer-events: none; }
+.phleb-header { text-align: center; margin-bottom: 72px; position: relative; z-index: 2; }
+.phleb-header .section-desc { margin: 0 auto; }
+
+/* ─── ANIMATED SIMULATION ─── */
+.sim-wrapper { position: relative; z-index: 2; margin-bottom: 48px; }
+
+/* Perspective toggle tabs */
+.sim-perspective-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 32px; }
+.sim-ptab { font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; padding: 10px 28px; border-radius: 50px; border: 1px solid rgba(0,0,0,0.1); background: rgba(0,0,0,0.03); color: var(--gray-400); cursor: pointer; transition: all 0.3s; }
+.sim-ptab:hover { border-color: rgba(0,201,167,0.3); color: var(--white); }
+.sim-ptab.active { background: var(--gradient-teal); color: var(--navy); border-color: transparent; }
+
+/* Simulation controls */
+.sim-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 24px; }
+.sim-play-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient-teal); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(0,201,167,0.3); transition: all 0.3s; }
+.sim-play-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(0,201,167,0.5); }
+.sim-play-btn svg { width: 24px; height: 24px; color: var(--navy); fill: var(--navy); }
+.sim-speed { font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; color: var(--gray-400); padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.1); cursor: pointer; transition: all 0.2s; background: transparent; }
+.sim-speed:hover, .sim-speed.active { border-color: var(--teal); color: var(--teal); }
+
+/* Clock / progress bar */
+.sim-clock-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding: 0 4px; }
+.sim-clock { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--white); min-width: 100px; }
+.sim-progress-track { flex: 1; height: 6px; background: rgba(0,0,0,0.08); border-radius: 3px; position: relative; overflow: hidden; }
+.sim-progress-fill { height: 100%; border-radius: 3px; background: var(--gradient-teal); width: 0%; transition: width 0.3s linear; }
+.sim-clock-end { font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; color: var(--gray-400); }
+
+/* Dual lane simulation */
+.sim-lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+
+.sim-lane { border-radius: 20px; padding: 28px 24px; position: relative; overflow: hidden; min-height: 480px; }
+.sim-lane.old { background: linear-gradient(180deg, rgba(229,62,62,0.05) 0%, rgba(255,255,255,0.95) 100%); border: 1px solid rgba(229,62,62,0.15); }
+.sim-lane.new { background: linear-gradient(180deg, rgba(0,201,167,0.05) 0%, rgba(255,255,255,0.95) 100%); border: 1px solid rgba(0,201,167,0.15); }
+
+.sim-lane-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.sim-lane-tag { font-family: 'Space Grotesk', sans-serif; font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 5px 12px; border-radius: 50px; }
+.sim-lane.old .sim-lane-tag { background: rgba(229,62,62,0.15); color: var(--accent-rose); }
+.sim-lane.new .sim-lane-tag { background: rgba(0,201,167,0.15); color: var(--teal); }
+.sim-lane-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); }
+
+/* Live gauges */
+.sim-gauges { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.sim-gauge { text-align: center; padding: 12px 8px; border-radius: 12px; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.08); }
+.sim-gauge-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 800; line-height: 1; }
+.sim-gauge-label { font-size: 0.62rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+.sim-lane.old .sim-gauge-val { color: var(--accent-rose); }
+.sim-lane.new .sim-gauge-val { color: var(--teal); }
+
+/* Animated map / route canvas */
+.sim-map { position: relative; width: 100%; height: 220px; background: rgba(240,244,248,0.95); border-radius: 14px; border: 1px solid rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 16px; }
+.sim-map canvas { width: 100%; height: 100%; }
+
+/* Event log */
+.sim-log { max-height: 120px; overflow-y: auto; padding: 8px 0; }
+.sim-log::-webkit-scrollbar { width: 3px; }
+.sim-log::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
+.sim-log-entry { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; opacity: 0; transform: translateY(8px); animation: logIn 0.3s forwards; }
+@keyframes logIn { to { opacity: 1; transform: translateY(0); } }
+.sim-log-time { font-family: 'Space Grotesk', sans-serif; font-size: 0.68rem; font-weight: 600; color: var(--gray-300); min-width: 52px; flex-shrink: 0; }
+.sim-log-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.sim-lane.old .sim-log-dot { background: var(--accent-rose); }
+.sim-lane.new .sim-log-dot { background: var(--teal); }
+.sim-log-text { font-size: 0.72rem; color: var(--gray-400); line-height: 1.4; }
+
+/* Diagnostics Company perspective overlay */
+.sim-biz-panel { display: none; position: relative; z-index: 2; margin-bottom: 32px; }
+.sim-biz-panel.visible { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.sim-biz-card { border-radius: 20px; padding: 32px 28px; }
+.sim-biz-card.old { background: linear-gradient(135deg, rgba(229,62,62,0.04) 0%, rgba(255,255,255,0.92) 100%); border: 1px solid rgba(229,62,62,0.15); }
+.sim-biz-card.new { background: linear-gradient(135deg, rgba(0,201,167,0.04) 0%, rgba(255,255,255,0.92) 100%); border: 1px solid rgba(0,201,167,0.15); }
+.sim-biz-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 20px; color: var(--white); }
+.sim-biz-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08); }
+.sim-biz-row:last-child { border-bottom: none; }
+.sim-biz-metric { font-size: 0.8rem; color: var(--gray-300); }
+.sim-biz-val { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; }
+.sim-biz-card.old .sim-biz-val { color: var(--accent-rose); }
+.sim-biz-card.new .sim-biz-val { color: var(--teal); }
+
+/* Final scoreboard */
+.sim-scoreboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; position: relative; z-index: 2; margin-bottom: 48px; }
+.sim-score { text-align: center; padding: 24px 12px; border-radius: 16px; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.08); position: relative; overflow: hidden; }
+.sim-score::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; }
+.sim-score.red::after { background: var(--accent-rose); }
+.sim-score.green::after { background: var(--teal); }
+.sim-score-label { font-size: 0.65rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 6px; }
+.sim-score-old { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--accent-rose); text-decoration: line-through; opacity: 0.6; }
+.sim-score-new { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--teal); }
+.sim-score-delta { font-size: 0.7rem; color: var(--teal); margin-top: 2px; font-weight: 600; }
+
+/* Dynamo section */
+.phleb-dynamo { position: relative; z-index: 2; text-align: center; padding: 32px; background: linear-gradient(135deg, rgba(0,201,167,0.05) 0%, rgba(59,130,246,0.03) 100%); border: 1px solid rgba(0,201,167,0.1); border-radius: 20px; }
+.phleb-dynamo-inner { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
+.dynamo-step { display: flex; align-items: center; gap: 12px; }
+.dynamo-icon { width: 48px; height: 48px; border-radius: 14px; background: rgba(0,201,167,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.dynamo-icon svg { width: 24px; height: 24px; color: var(--teal); }
+.dynamo-text h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; font-weight: 600; }
+.dynamo-text p { font-size: 0.78rem; color: var(--gray-400); }
+.dynamo-arrow { color: var(--teal); font-size: 1.5rem; }
+
+/* Responsive sim */
+@media (max-width: 768px) {
+  .sim-lanes { grid-template-columns: 1fr; }
+  .sim-biz-panel.visible { grid-template-columns: 1fr; }
+  .sim-scoreboard { grid-template-columns: repeat(2, 1fr); }
+  .sim-gauges { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .sim-map { height: 180px; }
+}
+
+/* ─── APPLICATIONS ─── */
+.applications { padding: 120px 0; background: var(--navy-light); }
+.applications-header { text-align: center; margin-bottom: 64px; }
+.applications-header .section-desc { margin: 0 auto; }
+.app-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.app-card { background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); border-radius: 20px; padding: 36px 28px; transition: all 0.4s; cursor: default; position: relative; overflow: hidden; }
+.app-card:hover { border-color: rgba(0,201,167,0.2); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.app-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.app-icon svg { width: 26px; height: 26px; }
+.app-icon.teal { background: rgba(0,201,167,0.1); } .app-icon.teal svg { color: var(--teal); }
+.app-icon.blue { background: rgba(59,130,246,0.1); } .app-icon.blue svg { color: var(--accent-blue); }
+.app-icon.violet { background: rgba(139,92,246,0.1); } .app-icon.violet svg { color: var(--accent-violet); }
+.app-icon.rose { background: rgba(229,62,62,0.1); } .app-icon.rose svg { color: var(--accent-rose); }
+.app-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+.app-card p { font-size: 0.9rem; color: var(--gray-300); line-height: 1.65; }
+.app-tag { display: inline-block; margin-top: 16px; font-size: 0.72rem; font-weight: 600; color: var(--teal); letter-spacing: 1px; text-transform: uppercase; }
+
+/* ─── TECH ─── */
+.tech { padding: 120px 0; background: var(--navy); }
+.tech-header { text-align: center; margin-bottom: 72px; }
+.tech-header .section-desc { margin: 0 auto; }
+.tech-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.tech-steps::before { content: ''; position: absolute; top: 40px; left: 12.5%; width: 75%; height: 2px; background: linear-gradient(90deg, var(--teal), var(--accent-blue), var(--accent-violet), var(--teal)); opacity: 0.3; }
+.tech-step { text-align: center; position: relative; padding: 0 16px; }
+.tech-step-num { width: 80px; height: 80px; border-radius: 50%; background: rgba(0,201,167,0.06); border: 2px solid rgba(0,201,167,0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative; z-index: 2; transition: all 0.3s; }
+.tech-step:hover .tech-step-num { border-color: var(--teal); background: rgba(0,201,167,0.1); box-shadow: 0 0 30px rgba(0,201,167,0.15); }
+.tech-step-num svg { width: 30px; height: 30px; color: var(--teal); }
+.tech-step h4 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+.tech-step p { font-size: 0.85rem; color: var(--gray-400); line-height: 1.6; }
+
+/* ─── IMPACT ─── */
+.impact { padding: 120px 0; background: var(--navy-light); position: relative; }
+.impact::before { content: ''; position: absolute; inset: 0; background: var(--gradient-glow); pointer-events: none; }
+.impact-inner { position: relative; z-index: 2; }
+.impact-header { text-align: center; margin-bottom: 64px; }
+.impact-header .section-desc { margin: 0 auto; }
+.impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.impact-card { text-align: center; padding: 36px 20px; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); border-radius: 20px; transition: all 0.4s; }
+.impact-card:hover { border-color: rgba(0,201,167,0.15); transform: translateY(-4px); }
+.impact-num { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 800; background: var(--gradient-teal); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+.impact-label { font-size: 0.88rem; color: var(--gray-300); line-height: 1.5; }
+
+/* ─── PROVIDERS ─── */
+.providers { padding: 120px 0; background: var(--navy); }
+.providers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.provider-features { display: flex; flex-direction: column; gap: 24px; margin-top: 32px; }
+.provider-feat { display: flex; gap: 16px; align-items: flex-start; padding: 20px; border-radius: 16px; border: 1px solid transparent; transition: all 0.3s; }
+.provider-feat:hover { background: rgba(0,201,167,0.03); border-color: rgba(0,201,167,0.08); }
+.provider-feat-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(0,201,167,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.provider-feat-icon svg { width: 20px; height: 20px; color: var(--teal); }
+.provider-feat h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; margin-bottom: 4px; }
+.provider-feat p { font-size: 0.85rem; color: var(--gray-400); line-height: 1.55; }
+.provider-visual { background: linear-gradient(135deg, rgba(0,201,167,0.05) 0%, rgba(59,130,246,0.03) 100%); border: 1px solid rgba(0,201,167,0.08); border-radius: 24px; padding: 48px; position: relative; overflow: hidden; }
+.pv-row { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.08); }
+.pv-row:last-child { border-bottom: none; }
+.pv-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.pv-dot.active { background: var(--teal); box-shadow: 0 0 10px var(--teal); }
+.pv-dot.warn { background: #D69E2E; }
+.pv-bar { flex: 1; height: 6px; border-radius: 3px; background: rgba(0,0,0,0.1); overflow: hidden; }
+.pv-bar-fill { height: 100%; border-radius: 3px; background: var(--gradient-teal); }
+.pv-label { font-size: 0.78rem; color: var(--gray-400); width: 100px; }
+.pv-val { font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--white); width: 50px; text-align: right; }
+
+/* ─── CERTS ─── */
+.certs { padding: 80px 0; background: var(--navy-light); }
+.certs-inner { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
+.cert-item { display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.6; transition: opacity 0.3s; }
+.cert-item:hover { opacity: 1; }
+.cert-icon { width: 56px; height: 56px; border-radius: 16px; background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.cert-icon svg { width: 26px; height: 26px; color: var(--gray-300); }
+.cert-icon img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+.cert-label { font-size: 0.72rem; color: var(--gray-400); font-weight: 500; text-align: center; }
+
+/* ─── TEAM ─── */
+.team { padding: 120px 0; background: var(--navy); }
+.team-header { text-align: center; margin-bottom: 64px; }
+.team-header .section-desc { margin: 0 auto; }
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; }
+.team-card { text-align: center; padding: 36px 24px; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); border-radius: 20px; transition: all 0.4s; }
+.team-card:hover { border-color: rgba(0,201,167,0.15); transform: translateY(-4px); }
+.team-avatar { width: 88px; height: 88px; border-radius: 50%; border: 3px solid rgba(0,201,167,0.2); margin: 0 auto 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(0,201,167,0.15), rgba(59,130,246,0.1)); }
+.team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.team-avatar-initials { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--teal); }
+.team-card h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+.team-role { font-size: 0.8rem; color: var(--teal); font-weight: 500; margin-bottom: 8px; }
+.team-bio { font-size: 0.8rem; color: var(--gray-400); line-height: 1.55; }
+
+/* ─── CTA ─── */
+.cta-section { padding: 120px 0; background: var(--navy-light); position: relative; overflow: hidden; }
+.cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(0,201,167,0.08) 0%, transparent 60%); }
+.cta-inner { position: relative; z-index: 2; text-align: center; max-width: 700px; margin: 0 auto; }
+.cta-inner .section-title { margin-bottom: 16px; }
+.cta-inner p { font-size: 1.1rem; color: var(--gray-300); line-height: 1.7; margin-bottom: 36px; }
+.cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.cta-contact-info { margin-top: 40px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+.cta-ci { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--gray-300); }
+.cta-ci svg { width: 18px; height: 18px; color: var(--teal); }
+.cta-ci a { color: var(--gray-300); text-decoration: none; transition: color 0.3s; }
+.cta-ci a:hover { color: var(--teal); }
+
+/* ─── FOOTER ─── */
+footer { padding: 48px 0 32px; border-top: 1px solid rgba(0,0,0,0.08); background: var(--navy); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.footer-left { display: flex; align-items: center; gap: 10px; }
+.footer-copy { font-size: 0.8rem; color: var(--gray-400); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 0.8rem; color: var(--gray-400); text-decoration: none; transition: color 0.3s; }
+.footer-links a:hover { color: var(--teal); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .hero-content { grid-template-columns: 1fr; text-align: center; }
+  .hero p { margin-left: auto; margin-right: auto; }
+  .hero-buttons { justify-content: center; }
+  .hero-stats { justify-content: center; }
+  .hero-right { margin-top: 40px; }
+  .hero-product-img { max-width: 360px; }
+  .float-tag { display: none; }
+  .problem-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-intro { grid-template-columns: 1fr; }
+  .phleb-compare { grid-template-columns: 1fr; gap: 24px; }
+  .phleb-vs { display: none; }
+  .phleb-metrics { grid-template-columns: repeat(2, 1fr); }
+  .app-grid { grid-template-columns: repeat(2, 1fr); }
+  .tech-steps { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+  .tech-steps::before { display: none; }
+  .impact-grid { grid-template-columns: repeat(2, 1fr); }
+  .providers-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); max-width: 600px; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .mobile-toggle { display: flex; }
+  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); padding: 24px; gap: 20px; border-bottom: 1px solid rgba(0,201,167,0.12); }
+  .problem-grid { grid-template-columns: 1fr; }
+  .app-grid { grid-template-columns: 1fr; }
+  .tech-steps { grid-template-columns: 1fr; }
+  .impact-grid { grid-template-columns: 1fr 1fr; }
+  .team-grid { grid-template-columns: 1fr; max-width: 400px; }
+  .hero-stats { flex-direction: column; gap: 20px; align-items: center; }
+  .specs-grid { grid-template-columns: 1fr; }
+  .certs-inner { gap: 24px; }
+  .phleb-metrics { grid-template-columns: 1fr 1fr; }
+  .phleb-dynamo-inner { flex-direction: column; gap: 20px; }
+  .dynamo-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <img src="assets/ei-logo-nav.png" alt="Phloton" class="logo-img" style="height:36px; border-radius: 6px;">
+      <span class="logo-text">Phloton</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#product">Product</a></li>
+      <li><a href="#blood-collection">Blood Collection</a></li>
+      <li><a href="#applications">Applications</a></li>
+      <li><a href="#technology">Technology</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+    </ul>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Patent-Filed &middot; CDSCO Approved &middot; ISO 13485
+        </div>
+        <h1>Precision Cold Chain.<br><span class="highlight">Zero Waste.</span></h1>
+        <p>Phloton is an AI-powered, solar-ready active cooling carrier that maintains precise 2&ndash;8&deg;C temperatures for up to 10 hours &mdash; eliminating last-mile cold chain failures for vaccines, medicines, blood products, and research specimens.</p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn-primary">
+            Request a Demo
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#product" class="btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            Explore Product
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">50%</div>
+            <div class="hero-stat-label">Vaccine wastage at last mile</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">25M</div>
+            <div class="hero-stat-label">Children unvaccinated yearly</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">$14B</div>
+            <div class="hero-stat-label">Annual biologics losses</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-product-wrap">
+          <div class="hero-product-glow"></div>
+          <img src="assets/img2.png" alt="Phloton 2L Active Cooling Carriers" class="hero-product-img">
+          <div class="float-tag ft-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            Solar Powered
+          </div>
+          <div class="float-tag ft-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            IP65 Rated
+          </div>
+          <div class="float-tag ft-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            IoT + AI Analytics
+          </div>
+          <div class="float-tag ft-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="12" rx="2" ry="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
+            10hr Battery
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM ═══ -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="problem-header">
+      <div class="section-label">The Crisis</div>
+      <div class="section-title">The last mile is where cold chains<br>break &mdash; and lives are lost</div>
+      <p class="section-desc">Traditional passive coolers (ice-lined boxes) fail to maintain precise temperatures in hot climates. There is no active temperature control at the point of care.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-num">50%</div>
+        <div class="problem-unit">Vaccine Wastage</div>
+        <div class="problem-text">Half of all vaccines are wasted at the last mile due to temperature excursions during transport and storage.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">25M</div>
+        <div class="problem-unit">Unvaccinated Children</div>
+        <div class="problem-text">Millions of children remain unvaccinated globally every year, largely driven by cold chain failures in rural areas.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">25%</div>
+        <div class="problem-unit">Blood Wastage</div>
+        <div class="problem-text">Annual blood product wastage during transport, with 50% of demand unmet in rural healthcare facilities.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">$14B</div>
+        <div class="problem-unit">Annual Losses</div>
+        <div class="problem-text">Billions lost annually in medicinal biologics, pharmaceuticals, and temperature-sensitive products globally.</div>
+      </div>
+    </div>
+    <div class="problem-img">
+      <img src="assets/img3.png" alt="Healthcare workers carrying traditional cold boxes">
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRODUCT ═══ -->
+<section class="product-section" id="product">
+  <div class="container">
+    <div class="product-intro">
+      <div class="product-gallery">
+        <img src="assets/img4.png" alt="Phloton 2L Active Cooling Carrier" class="product-main-img" id="mainProductImg">
+        <div class="product-gallery-grid">
+          <img src="assets/img4.png" alt="3D Render" class="product-thumb" onclick="document.getElementById('mainProductImg').src=this.src">
+          <img src="assets/img5.jpg" alt="Product Photo" class="product-thumb" onclick="document.getElementById('mainProductImg').src=this.src">
+          <img src="assets/img6.png" alt="Solar Charging" class="product-thumb" onclick="document.getElementById('mainProductImg').src=this.src">
+        </div>
+      </div>
+      <div>
+        <div class="section-label">The Product</div>
+        <div class="section-title">Smart active cooling,<br>built for the field</div>
+        <p class="section-desc">Phloton replaces unreliable ice-based carriers with precision thermoelectric cooling &mdash; no refrigerants, no ice, no guesswork. Real-time IoT monitoring ensures every shipment stays within range.</p>
+        <div class="specs-grid">
+          <div class="spec-item">
+            <div class="spec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></div>
+            <div class="spec-val">2&ndash;8&deg;C</div>
+            <div class="spec-label">Precision temperature hold</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="12" rx="2" ry="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg></div>
+            <div class="spec-val">10 hrs</div>
+            <div class="spec-label">Battery life at 50&deg;C ambient</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+            <div class="spec-val">Solar</div>
+            <div class="spec-label">Off-grid compatible charging</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+            <div class="spec-val">4.5 kg</div>
+            <div class="spec-label">Lightweight, IP65 rated</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PHLEBOTOMIST / BLOOD COLLECTION ═══ -->
+<section class="phleb" id="blood-collection">
+  <div class="container">
+    <div class="phleb-header">
+      <div class="section-label">At-Home Blood Collection</div>
+      <div class="section-title">Turn every rider into a<br><span style="background:var(--gradient-teal);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">mobile cold chain spoke</span></div>
+      <p class="section-desc">Phlebotomists and diagnostic riders lose hours and kilometres to frequent hub trips because gel-pack boxes warm up fast. Phloton changes the equation entirely.</p>
+    </div>
+
+    <!-- PERSPECTIVE TABS -->
+    <div class="sim-perspective-tabs">
+      <div class="sim-ptab active" onclick="switchPerspective('rider')">Phlebotomist View</div>
+      <div class="sim-ptab" onclick="switchPerspective('biz')">Diagnostics Company View</div>
+    </div>
+
+    <!-- SIMULATION CONTROLS -->
+    <div class="sim-controls">
+      <button class="sim-speed" onclick="setSpeed(1)" id="sp1x">1&times;</button>
+      <button class="sim-play-btn" onclick="toggleSim()" id="simPlayBtn">
+        <svg viewBox="0 0 24 24" id="simPlayIcon"><polygon points="5,3 19,12 5,21"/></svg>
+      </button>
+      <button class="sim-speed active" onclick="setSpeed(2)" id="sp2x">2&times;</button>
+      <button class="sim-speed" onclick="setSpeed(4)" id="sp4x">4&times;</button>
+    </div>
+
+    <!-- CLOCK BAR -->
+    <div class="sim-clock-bar">
+      <div class="sim-clock" id="simClock">6:30 AM</div>
+      <div class="sim-progress-track"><div class="sim-progress-fill" id="simProgress"></div></div>
+      <div class="sim-clock-end">2:00 PM</div>
+    </div>
+
+    <!-- DUAL LANE SIMULATION (Phlebotomist View) -->
+    <div class="sim-wrapper" id="simRiderView">
+      <div class="sim-lanes">
+        <!-- OLD lane -->
+        <div class="sim-lane old">
+          <div class="sim-lane-header">
+            <span class="sim-lane-tag">Today&rsquo;s Reality</span>
+            <span class="sim-lane-title">Ice Pack &amp; Gel Box</span>
+          </div>
+          <div class="sim-gauges">
+            <div class="sim-gauge"><div class="sim-gauge-val" id="oldTemp">4.0&deg;C</div><div class="sim-gauge-label">Temp</div></div>
+            <div class="sim-gauge"><div class="sim-gauge-val" id="oldHomes">0</div><div class="sim-gauge-label">Homes</div></div>
+            <div class="sim-gauge"><div class="sim-gauge-val" id="oldKm">0 km</div><div class="sim-gauge-label">Distance</div></div>
+          </div>
+          <div class="sim-map"><canvas id="oldMap"></canvas></div>
+          <div class="sim-log" id="oldLog"></div>
+        </div>
+        <!-- NEW lane -->
+        <div class="sim-lane new">
+          <div class="sim-lane-header">
+            <span class="sim-lane-tag">With Phloton</span>
+            <span class="sim-lane-title">Active Cooling on Bike</span>
+          </div>
+          <div class="sim-gauges">
+            <div class="sim-gauge"><div class="sim-gauge-val" id="newTemp">4.0&deg;C</div><div class="sim-gauge-label">Temp</div></div>
+            <div class="sim-gauge"><div class="sim-gauge-val" id="newHomes">0</div><div class="sim-gauge-label">Homes</div></div>
+            <div class="sim-gauge"><div class="sim-gauge-val" id="newKm">0 km</div><div class="sim-gauge-label">Distance</div></div>
+          </div>
+          <div class="sim-map"><canvas id="newMap"></canvas></div>
+          <div class="sim-log" id="newLog"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIAGNOSTICS COMPANY VIEW -->
+    <div class="sim-biz-panel" id="simBizView">
+      <div class="sim-biz-card old">
+        <div class="sim-lane-tag" style="background:rgba(229,62,62,0.15);color:var(--accent-rose);display:inline-block;padding:5px 12px;border-radius:50px;font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Without Phloton</div>
+        <div class="sim-biz-title">Diagnostics Lab &mdash; Ice Pack Fleet</div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Riders needed (100 homes/day)</span><span class="sim-biz-val" id="bizOldRiders">0</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Samples rejected (temp breach)</span><span class="sim-biz-val" id="bizOldRejects">0%</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Avg. cost per sample</span><span class="sim-biz-val" id="bizOldCost">&#8377;0</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Daily fleet km</span><span class="sim-biz-val" id="bizOldFleetKm">0 km</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Audit compliance</span><span class="sim-biz-val" id="bizOldAudit">0%</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Revenue lost / month</span><span class="sim-biz-val" id="bizOldRevLoss">&#8377;0</span></div>
+      </div>
+      <div class="sim-biz-card new">
+        <div class="sim-lane-tag" style="background:rgba(0,201,167,0.15);color:var(--teal);display:inline-block;padding:5px 12px;border-radius:50px;font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">With Phloton</div>
+        <div class="sim-biz-title">Diagnostics Lab &mdash; Phloton Fleet</div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Riders needed (100 homes/day)</span><span class="sim-biz-val" id="bizNewRiders">0</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Samples rejected (temp breach)</span><span class="sim-biz-val" id="bizNewRejects">0%</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Avg. cost per sample</span><span class="sim-biz-val" id="bizNewCost">&#8377;0</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Daily fleet km</span><span class="sim-biz-val" id="bizNewFleetKm">0 km</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Audit compliance</span><span class="sim-biz-val" id="bizNewAudit">0%</span></div>
+        <div class="sim-biz-row"><span class="sim-biz-metric">Revenue saved / month</span><span class="sim-biz-val" id="bizNewRevSave">&#8377;0</span></div>
+      </div>
+    </div>
+
+    <!-- FINAL SCOREBOARD (visible after sim ends) -->
+    <div class="sim-scoreboard" id="simScoreboard" style="display:none;">
+      <div class="sim-score green">
+        <div class="sim-score-label">Homes / Shift</div>
+        <div class="sim-score-old">9</div>
+        <div class="sim-score-new">20+</div>
+        <div class="sim-score-delta">&uarr; 122% more</div>
+      </div>
+      <div class="sim-score green">
+        <div class="sim-score-label">Cost / Sample</div>
+        <div class="sim-score-old">&#8377;38</div>
+        <div class="sim-score-new">&#8377;14</div>
+        <div class="sim-score-delta">&darr; 63% cheaper</div>
+      </div>
+      <div class="sim-score green">
+        <div class="sim-score-label">Hub Trips</div>
+        <div class="sim-score-old">3</div>
+        <div class="sim-score-new">0</div>
+        <div class="sim-score-delta">Direct to lab</div>
+      </div>
+      <div class="sim-score green">
+        <div class="sim-score-label">Sample Integrity</div>
+        <div class="sim-score-old">72%</div>
+        <div class="sim-score-new">100%</div>
+        <div class="sim-score-delta">Zero breaches</div>
+      </div>
+    </div>
+
+    <!-- Dynamo charging -->
+    <div class="phleb-dynamo">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:24px;">Dynamo Charging: Power While You Ride</div>
+      <div class="phleb-dynamo-inner">
+        <div class="dynamo-step">
+          <div class="dynamo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="dynamo-text">
+            <h4>Overnight Charge</h4>
+            <p>PCM recharges from mains</p>
+          </div>
+        </div>
+        <div class="dynamo-arrow">&rarr;</div>
+        <div class="dynamo-step">
+          <div class="dynamo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="dynamo-text">
+            <h4>Bike Dynamo</h4>
+            <p>Tops up battery while riding</p>
+          </div>
+        </div>
+        <div class="dynamo-arrow">&rarr;</div>
+        <div class="dynamo-step">
+          <div class="dynamo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+          </div>
+          <div class="dynamo-text">
+            <h4>Full-Shift Cold</h4>
+            <p>2&ndash;8&deg;C for 10+ hours</p>
+          </div>
+        </div>
+        <div class="dynamo-arrow">&rarr;</div>
+        <div class="dynamo-step">
+          <div class="dynamo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="dynamo-text">
+            <h4>Zero Hub Stops</h4>
+            <p>Direct-to-lab, fully compliant</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ APPLICATIONS ═══ -->
+<section class="applications" id="applications">
+  <div class="container">
+    <div class="applications-header">
+      <div class="section-label">Applications</div>
+      <div class="section-title">One platform, many lifesaving<br>use cases</div>
+      <p class="section-desc">From rural immunization drives to biomedical research labs, Phloton ensures temperature integrity wherever it matters most.</p>
+    </div>
+    <div class="app-grid">
+      <div class="app-card">
+        <div class="app-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16"/><path d="M3 21h18"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></div>
+        <h3>Vaccines &amp; Immunization</h3>
+        <p>Maintain precise 2&ndash;8&deg;C for routine and campaign immunization programs. Designed for ASHA workers and frontline health workers in remote, off-grid settings.</p>
+        <span class="app-tag">Primary Healthcare</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M9 16l2 2 4-4"/></svg></div>
+        <h3>Medicines &amp; Pharmaceuticals</h3>
+        <p>Transport temperature-sensitive biologics, insulin, and specialty drugs without cold chain breaks. Full traceability for regulatory compliance.</p>
+        <span class="app-tag">Pharma Distribution</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h3>Blood Products &amp; Samples</h3>
+        <p>Safe transport of whole blood, plasma, and diagnostic samples for blood banks, phlebotomists, and rural transfusion centres. Reduces the 25% annual wastage rate.</p>
+        <span class="app-tag">Blood Banking</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3>Research Specimens</h3>
+        <p>Preserve biological samples, tissue cultures, and reagents during field collection and lab-to-lab transfers with continuous temperature logging.</p>
+        <span class="app-tag">Biomedical Research</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <h3>Animal Healthcare</h3>
+        <p>Active cooling for veterinary vaccines covering Foot &amp; Mouth Disease, Brucellosis, PPR, and other livestock immunizations across India&rsquo;s vast rural network.</p>
+        <span class="app-tag">Veterinary</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+        <h3>Dairy &amp; Agri Cold Chain</h3>
+        <p>Quality preservation for dairy samples, semen doses for artificial insemination, and other agriculture-adjacent temperature-sensitive logistics.</p>
+        <span class="app-tag">Agriculture</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TECHNOLOGY ═══ -->
+<section class="tech" id="technology">
+  <div class="container">
+    <div class="tech-header">
+      <div class="section-label">Technology</div>
+      <div class="section-title">How Phloton works</div>
+      <p class="section-desc">A convergence of thermoelectric cooling, IoT, and AI &mdash; engineered for extreme environments with zero refrigerants.</p>
+    </div>
+    <div class="tech-steps">
+      <div class="tech-step">
+        <div class="tech-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></div>
+        <h4>Thermoelectric Cooling</h4>
+        <p>Peltier-effect modules with phase change material maintain 2&ndash;8&deg;C without any refrigerants or moving parts.</p>
+      </div>
+      <div class="tech-step">
+        <div class="tech-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+        <h4>IoT Sensors</h4>
+        <p>Bluetooth-connected temperature and humidity sensors transmit real-time data to a cloud dashboard and mobile app.</p>
+      </div>
+      <div class="tech-step">
+        <div class="tech-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20z"/><path d="M2 12h4M18 12h4M12 2v4M12 18v4"/></svg></div>
+        <h4>AI / ML Analytics</h4>
+        <p>Predictive algorithms optimize power consumption and anticipate temperature excursions before they happen.</p>
+      </div>
+      <div class="tech-step">
+        <div class="tech-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2"/></svg></div>
+        <h4>Solar + Off-Grid</h4>
+        <p>Solar panel integration and swappable battery packs enable operation in areas with zero electricity infrastructure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ IMPACT ═══ -->
+<section class="impact" id="impact">
+  <div class="container">
+    <div class="impact-inner">
+      <div class="impact-header">
+        <div class="section-label">Impact &amp; Traction</div>
+        <div class="section-title">Built in the field, proven<br>with partners</div>
+        <p class="section-desc">Deployed with government health programs and private healthcare networks across India.</p>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-num">200+</div>
+          <div class="impact-label">Units in Letters of Intent from healthcare partners</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-num">50+</div>
+          <div class="impact-label">Active units deployed across pilot programs</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-num">20+</div>
+          <div class="impact-label">Field pilots with government &amp; private health systems</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-num">40%</div>
+          <div class="impact-label">Energy efficiency gains vs. traditional cold chain</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOR HEALTHCARE PROVIDERS ═══ -->
+<section class="providers" id="providers">
+  <div class="container">
+    <div class="providers-grid">
+      <div>
+        <div class="section-label">For Healthcare Providers</div>
+        <div class="section-title">Your patients deserve<br>every dose delivered safely</div>
+        <p class="section-desc">Whether you run a primary health centre, a district hospital, or a mobile immunization program &mdash; Phloton gives you confidence that every temperature-sensitive product arrives within specification.</p>
+        <div class="provider-features">
+          <div class="provider-feat">
+            <div class="provider-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div>
+              <h4>Compliance Built-In</h4>
+              <p>CDSCO approved, ISO 13485 compliant. Automated temperature logs for audit trails and WHO PQS alignment.</p>
+            </div>
+          </div>
+          <div class="provider-feat">
+            <div class="provider-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+            <div>
+              <h4>Real-Time Monitoring</h4>
+              <p>Cloud dashboard and mobile app with instant alerts if temperatures deviate. Full chain-of-custody visibility.</p>
+            </div>
+          </div>
+          <div class="provider-feat">
+            <div class="provider-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="12" rx="2" ry="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg></div>
+            <div>
+              <h4>Off-Grid Ready</h4>
+              <p>Solar charging and 10-hour battery means no dependency on unreliable electricity in rural and remote areas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="provider-visual">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;margin-bottom:24px;color:var(--white);">Live Shipment Dashboard</div>
+        <div class="pv-row">
+          <div class="pv-dot active"></div>
+          <div class="pv-label">Batch #1042</div>
+          <div class="pv-bar"><div class="pv-bar-fill" style="width:92%"></div></div>
+          <div class="pv-val">4.1&deg;C</div>
+        </div>
+        <div class="pv-row">
+          <div class="pv-dot active"></div>
+          <div class="pv-label">Batch #1043</div>
+          <div class="pv-bar"><div class="pv-bar-fill" style="width:88%"></div></div>
+          <div class="pv-val">3.8&deg;C</div>
+        </div>
+        <div class="pv-row">
+          <div class="pv-dot active"></div>
+          <div class="pv-label">Batch #1044</div>
+          <div class="pv-bar"><div class="pv-bar-fill" style="width:95%"></div></div>
+          <div class="pv-val">4.3&deg;C</div>
+        </div>
+        <div class="pv-row">
+          <div class="pv-dot warn"></div>
+          <div class="pv-label">Batch #1045</div>
+          <div class="pv-bar"><div class="pv-bar-fill" style="width:72%; background: linear-gradient(90deg, #D69E2E, #ED8936);"></div></div>
+          <div class="pv-val">6.1&deg;C</div>
+        </div>
+        <div style="margin-top:24px;padding:16px;background:rgba(0,201,167,0.06);border:1px solid rgba(0,201,167,0.12);border-radius:12px;display:flex;align-items:center;gap:12px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00C9A7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span style="font-size:0.8rem;color:var(--gray-300);">All shipments within compliance &middot; 0 excursions today</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CERTIFICATIONS ═══ -->
+<section class="certs">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:32px;">
+      <div class="section-label">Trusted &amp; Certified</div>
+    </div>
+    <div class="certs-inner">
+      <div class="cert-item"><div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="cert-label">CDSCO<br>Approved</div></div>
+      <div class="cert-item"><div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div class="cert-label">ISO 13485<br>Certified</div></div>
+      <div class="cert-item"><div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="cert-label">Patent<br>Filed</div></div>
+      <div class="cert-item"><div class="cert-icon"><img src="assets/img7.png" alt="Royal Academy of Engineering"></div><div class="cert-label">Royal Academy<br>of Engineering</div></div>
+      <div class="cert-item"><div class="cert-icon"><img src="assets/img8.png" alt="IKP"></div><div class="cert-label">IKP<br>Eden</div></div>
+      <div class="cert-item"><div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="cert-label">BIRAC<br>Supported</div></div>
+      <div class="cert-item"><div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="cert-label">MeitY<br>Supported</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TEAM ═══ -->
+<section class="team" id="team">
+  <div class="container">
+    <div class="team-header">
+      <div class="section-label">Leadership</div>
+      <div class="section-title">Built by engineers who<br>understand the field</div>
+      <p class="section-desc">A multidisciplinary team combining deep-tech innovation with frontline healthcare understanding.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar"><img src="assets/ankita.png" alt="Ankita Mittal"></div>
+        <h4>Ankita Mittal</h4>
+        <div class="team-role">Chief Executive Officer</div>
+        <div class="team-bio">MBA &ndash; ISB &middot; B.Tech ECE, VIT<br>Strategic partnerships, market entry &amp; stakeholder engagement</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="assets/prerit.png" alt="Prerit Mittal"></div>
+        <h4>Prerit Mittal</h4>
+        <div class="team-role">Founder &amp; Project Lead</div>
+        <div class="team-bio">MBA &ndash; IIM Ahmedabad &middot; B.Tech CS, VIT<br>Fellow, Royal Academy of Engineering. Deep-tech &amp; healthcare innovation</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="assets/suraj.png" alt="Suraj J R"></div>
+        <h4>Suraj J R</h4>
+        <div class="team-role">Lead &ndash; Electronics &amp; Hardware</div>
+        <div class="team-bio">B.Tech EEE &ndash; Presidency University<br>Core architect of Phloton&rsquo;s cooling engine &amp; power management system</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="assets/shruti.png" alt="Shruti"></div>
+        <h4>Shruti</h4>
+        <div class="team-role">Firmware Engineer</div>
+        <div class="team-bio">B.Tech EEE<br>Embedded systems &amp; IoT firmware for Phloton&rsquo;s smart cooling platform</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="section-label">Get Started</div>
+      <div class="section-title">Ready to eliminate cold chain failures?</div>
+      <p>Whether you're a healthcare provider scaling last-mile delivery, a researcher transporting specimens, or a diagnostic lab optimising rider routes &mdash; let's talk about what Phloton can do for your cold chain.</p>
+      <div class="cta-buttons">
+        <a href="mailto:prerit@phloton.com" class="btn-primary">
+          Request a Pilot
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="mailto:prerit@phloton.com?subject=Partnership%20Inquiry" class="btn-secondary">Partner With Us</a>
+      </div>
+      <div class="cta-contact-info">
+        <div class="cta-ci">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:prerit@phloton.com">prerit@phloton.com</a>
+        </div>
+        <div class="cta-ci">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+919560399499">+91 9560399499</a>
+        </div>
+        <div class="cta-ci">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <a href="https://www.phloton.com">phloton.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="assets/ei-logo-nav.png" alt="Phloton" style="height:24px; border-radius:4px;">
+        <span class="footer-copy">&copy; 2026 Enhanced Innovations Pvt. Ltd. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:prerit@phloton.com">Contact</a>
+        <a href="https://www.linkedin.com/company/enhanced-innovations/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════
+// NAV & SCROLL REVEAL
+// ═══════════════════════════════════════
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+const mobileToggle = document.getElementById('mobileToggle');
+const navLinks = document.getElementById('navLinks');
+mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; } });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.problem-card, .app-card, .tech-step, .impact-card, .team-card, .spec-item, .provider-feat, .dynamo-step, .sim-score').forEach(el => {
+  el.style.opacity = '0'; el.style.transform = 'translateY(24px)'; el.style.transition = 'opacity 0.6s ease, transform 0.6s ease'; observer.observe(el);
+});
+document.querySelectorAll('.problem-grid, .app-grid, .impact-grid, .specs-grid, .tech-steps, .team-grid, .sim-scoreboard').forEach(grid => {
+  Array.from(grid.children).forEach((item, i) => { item.style.transitionDelay = `${i * 0.1}s`; });
+});
+
+// ═══════════════════════════════════════
+// PHLEBOTOMIST SIMULATION ENGINE
+// ═══════════════════════════════════════
+(function() {
+  let simRunning = false, simDone = false, simTimer = null, speed = 2;
+  let simTime = 390; // 6:30 AM in minutes
+  const SIM_END = 840; // 2:00 PM in minutes
+  const TICK_MS_BASE = 80; // ms per sim-minute at 1x
+
+  // ─── Timeline events: {t: minutes-from-midnight, type, data} ───
+  const oldEvents = [
+    {t:390,type:'log',msg:'Loaded gel packs from hub refrigerator'},
+    {t:395,type:'log',msg:'Departed hub — heading to first home'},
+    {t:420,type:'home',msg:'Home 1 — collected 3 tubes',temp:5.2,km:3},
+    {t:440,type:'home',msg:'Home 2 — collected 2 tubes',temp:6.8,km:5},
+    {t:460,type:'home',msg:'Home 3 — collected 4 tubes',temp:8.4,km:8},
+    {t:480,type:'home',msg:'Home 4 — collected 2 tubes',temp:9.9,km:11},
+    {t:500,type:'home',msg:'Home 5 — collected 3 tubes',temp:11.2,km:14},
+    {t:510,type:'alert',msg:'TEMP BREACH — gel packs at 11.2\u00b0C! Rushing to hub'},
+    {t:530,type:'hub',msg:'Hub return #1 — offloaded samples, reloaded gel packs',temp:4.0,km:20},
+    {t:550,type:'log',msg:'Departed hub again — second run'},
+    {t:570,type:'home',msg:'Home 6 — collected 2 tubes',temp:5.8,km:23},
+    {t:590,type:'home',msg:'Home 7 — collected 3 tubes',temp:7.3,km:25},
+    {t:620,type:'home',msg:'Home 8 — collected 2 tubes',temp:9.1,km:28},
+    {t:650,type:'home',msg:'Home 9 — collected 4 tubes',temp:10.8,km:31},
+    {t:660,type:'alert',msg:'TEMP RISING — must return to hub again'},
+    {t:680,type:'hub',msg:'Hub return #2 — offloaded, reloaded',temp:4.0,km:35},
+    {t:710,type:'home',msg:'Home 10 (attempted) — patient unavailable',temp:6.2,km:37},
+    {t:740,type:'hub',msg:'Hub return #3 — final offload. Day done.',temp:8.5,km:40},
+    {t:750,type:'end',msg:'Shift over — 9 homes, 25 tubes, 3 hub trips, 40 km'}
+  ];
+  const newEvents = [
+    {t:390,type:'log',msg:'Phloton powered on — battery 100%, temp locked at 4\u00b0C'},
+    {t:393,type:'log',msg:'Mounted Phloton on rear rack, dynamo connected'},
+    {t:400,type:'log',msg:'Departed — dynamo charging as rider pedals'},
+    {t:418,type:'home',msg:'Home 1 — collected 3 tubes',temp:4.1,km:2},
+    {t:432,type:'home',msg:'Home 2 — collected 2 tubes',temp:4.0,km:3.5},
+    {t:448,type:'home',msg:'Home 3 — collected 4 tubes',temp:4.1,km:5},
+    {t:462,type:'home',msg:'Home 4 — collected 2 tubes',temp:3.9,km:6},
+    {t:478,type:'home',msg:'Home 5 — collected 3 tubes',temp:4.0,km:7.2},
+    {t:495,type:'home',msg:'Home 6 — collected 3 tubes',temp:4.1,km:8},
+    {t:510,type:'home',msg:'Home 7 — collected 2 tubes',temp:4.0,km:8.8},
+    {t:525,type:'home',msg:'Home 8 — collected 4 tubes',temp:3.9,km:9.5},
+    {t:540,type:'home',msg:'Home 9 — collected 2 tubes',temp:4.1,km:10.2},
+    {t:558,type:'home',msg:'Home 10 — collected 3 tubes',temp:4.0,km:11},
+    {t:580,type:'home',msg:'Home 11 — collected 2 tubes',temp:4.1,km:11.8},
+    {t:600,type:'home',msg:'Home 12 — collected 3 tubes',temp:4.0,km:12.5},
+    {t:618,type:'home',msg:'Home 13 — collected 4 tubes',temp:3.9,km:13},
+    {t:635,type:'home',msg:'Home 14 — collected 2 tubes',temp:4.1,km:13.5},
+    {t:650,type:'home',msg:'Home 15 — collected 3 tubes',temp:4.0,km:14},
+    {t:668,type:'home',msg:'Home 16 — collected 2 tubes',temp:4.0,km:14.5},
+    {t:685,type:'home',msg:'Home 17 — collected 3 tubes',temp:4.1,km:15},
+    {t:700,type:'home',msg:'Home 18 — collected 2 tubes',temp:3.9,km:15.5},
+    {t:718,type:'home',msg:'Home 19 — collected 4 tubes',temp:4.0,km:16},
+    {t:735,type:'home',msg:'Home 20 — collected 3 tubes',temp:4.1,km:16.5},
+    {t:755,type:'lab',msg:'Arrived at lab — all 56 tubes compliant, audit-ready',temp:4.0,km:18},
+    {t:760,type:'end',msg:'Shift done — 20 homes, 56 tubes, 0 hub trips, 18 km'}
+  ];
+
+  // State
+  let oldIdx=0, newIdx=0;
+  let oldState={temp:4.0,homes:0,km:0,hubTrips:0,tubes:0,breaches:0};
+  let newState={temp:4.0,homes:0,km:0,hubTrips:0,tubes:0,breaches:0};
+
+  // Map route points (generated paths)
+  const HUB = {x:0.5, y:0.15};
+  const LAB = {x:0.85, y:0.85};
+  function genHomes(n,seed) {
+    let pts = [], s = seed;
+    for(let i=0;i<n;i++){
+      s=(s*16807+0)%2147483647;
+      let x=0.12+(s%1000)/1000*0.76;
+      s=(s*16807+0)%2147483647;
+      let y=0.22+(s%1000)/1000*0.65;
+      pts.push({x,y});
+    }
+    return pts;
+  }
+  const oldHomes = genHomes(10, 42);
+  const newHomes = genHomes(20, 77);
+
+  function drawMap(canvasId, homes, visitedCount, riderPos, hubTrips, isOld, goingToLab) {
+    const c = document.getElementById(canvasId);
+    if(!c) return;
+    const ctx = c.getContext('2d');
+    const W = c.parentElement.clientWidth, H = c.parentElement.clientHeight;
+    c.width = W * 2; c.height = H * 2; ctx.scale(2,2);
+
+    // Background grid
+    ctx.fillStyle = 'rgba(240,244,248,0.95)'; ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle = 'rgba(0,0,0,0.05)'; ctx.lineWidth = 1;
+    for(let x=0;x<W;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+    // Hub
+    let hx=HUB.x*W, hy=HUB.y*H;
+    ctx.fillStyle = isOld ? 'rgba(229,62,62,0.2)' : 'rgba(0,201,167,0.15)';
+    ctx.beginPath(); ctx.arc(hx,hy,18,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = isOld ? '#E53E3E' : '#00C9A7';
+    ctx.font = 'bold 8px Space Grotesk, sans-serif';
+    ctx.textAlign = 'center'; ctx.fillText('HUB',hx,hy+3);
+
+    // Lab
+    let lx=LAB.x*W, ly=LAB.y*H;
+    ctx.fillStyle = 'rgba(59,130,246,0.2)';
+    ctx.beginPath(); ctx.arc(lx,ly,16,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#3B82F6';
+    ctx.font = 'bold 8px Space Grotesk, sans-serif';
+    ctx.fillText('LAB',lx,ly+3);
+
+    // Path lines
+    let path = [{...HUB}];
+    let visitIdx = 0;
+    if(isOld) {
+      // Old: hub -> homes(1-5) -> hub -> homes(6-9) -> hub
+      for(let i=0;i<Math.min(visitedCount,5);i++) path.push(homes[i]);
+      if(hubTrips>=1) path.push({...HUB});
+      if(visitedCount>5) { for(let i=5;i<Math.min(visitedCount,10);i++) path.push(homes[i]); }
+      if(hubTrips>=2) path.push({...HUB});
+      if(hubTrips>=3) path.push({...HUB});
+    } else {
+      // New: hub -> all homes -> lab
+      for(let i=0;i<visitedCount;i++) path.push(homes[i]);
+      if(goingToLab) path.push({...LAB});
+    }
+
+    // Draw path
+    if(path.length > 1) {
+      ctx.strokeStyle = isOld ? 'rgba(229,62,62,0.25)' : 'rgba(0,201,167,0.25)';
+      ctx.lineWidth = 1.5;
+      if(isOld) ctx.setLineDash([4,4]); else ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.moveTo(path[0].x*W, path[0].y*H);
+      for(let i=1;i<path.length;i++) ctx.lineTo(path[i].x*W, path[i].y*H);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Home dots
+    homes.forEach((h,i) => {
+      let px=h.x*W, py=h.y*H;
+      if(i < visitedCount) {
+        ctx.fillStyle = isOld ? 'rgba(229,62,62,0.7)' : 'rgba(0,201,167,0.7)';
+        ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#fff'; ctx.font = 'bold 6px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.fillText(i+1,px,py+2.5);
+      } else {
+        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        ctx.beginPath(); ctx.arc(px,py,4,0,Math.PI*2); ctx.fill();
+      }
+    });
+
+    // Rider dot (pulsing)
+    if(riderPos) {
+      let rx=riderPos.x*W, ry=riderPos.y*H;
+      let pulse = 8 + 4*Math.sin(Date.now()/200);
+      ctx.fillStyle = isOld ? 'rgba(229,62,62,0.15)' : 'rgba(0,201,167,0.15)';
+      ctx.beginPath(); ctx.arc(rx,ry,pulse,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = isOld ? '#E53E3E' : '#00C9A7';
+      ctx.beginPath(); ctx.arc(rx,ry,5,0,Math.PI*2); ctx.fill();
+      // Bike icon
+      ctx.fillStyle = '#1A1A2E'; ctx.font = '9px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('\u{1F6B2}',rx,ry-10);
+    }
+  }
+
+  function formatTime(mins) {
+    let h = Math.floor(mins/60), m = mins%60;
+    let ampm = h >= 12 ? 'PM' : 'AM';
+    if(h > 12) h -= 12; if(h === 0) h = 12;
+    return h + ':' + (m < 10 ? '0' : '') + m + ' ' + ampm;
+  }
+
+  function addLog(logId, time, msg, type) {
+    const log = document.getElementById(logId);
+    if(!log) return;
+    const entry = document.createElement('div');
+    entry.className = 'sim-log-entry';
+    let dotColor = type==='alert' ? '#E53E3E' : type==='hub' ? '#D69E2E' : type==='home' ? (logId==='oldLog'?'#E53E3E':'#00C9A7') : type==='lab' ? '#3B82F6' : '#4A5568';
+    entry.innerHTML = '<span class="sim-log-time">' + formatTime(time) + '</span><span class="sim-log-dot" style="background:'+dotColor+'"></span><span class="sim-log-text">' + msg + '</span>';
+    log.prepend(entry);
+  }
+
+  // Interpolate rider position
+  function getRiderPos(events, idx, currentTime, homes, isOld) {
+    // Find last and next event positions
+    let lastPos = {...HUB}, nextPos = {...HUB};
+    let lastT = 390, nextT = 400;
+    let homeCount = 0;
+    for(let i=0;i<=Math.min(idx, events.length-1);i++){
+      let e = events[i];
+      if(e.type==='home') { lastPos = homes[homeCount] || lastPos; homeCount++; }
+      else if(e.type==='hub') lastPos = {...HUB};
+      else if(e.type==='lab') lastPos = {...LAB};
+      lastT = e.t;
+    }
+    // next
+    homeCount = 0;
+    for(let i=0;i<Math.min(idx+1, events.length);i++){
+      if(events[i].type==='home') homeCount++;
+    }
+    if(idx+1 < events.length) {
+      let ne = events[idx+1];
+      nextT = ne.t;
+      if(ne.type==='home') nextPos = homes[homeCount] || nextPos;
+      else if(ne.type==='hub') nextPos = {...HUB};
+      else if(ne.type==='lab') nextPos = {...LAB};
+    }
+    let frac = nextT > lastT ? Math.min(1, (currentTime - lastT) / (nextT - lastT)) : 1;
+    return { x: lastPos.x + (nextPos.x - lastPos.x)*frac, y: lastPos.y + (nextPos.y - lastPos.y)*frac };
+  }
+
+  // Business perspective interpolation
+  function updateBizPanel(progress) {
+    // Animate from 0 to final values
+    let p = Math.min(1, progress);
+    let eased = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2,2)/2; // easeInOutQuad
+
+    document.getElementById('bizOldRiders').textContent = Math.round(11 * eased);
+    document.getElementById('bizOldRejects').textContent = Math.round(28 * eased) + '%';
+    document.getElementById('bizOldCost').textContent = '\u20B9' + Math.round(38 * eased);
+    document.getElementById('bizOldFleetKm').textContent = Math.round(440 * eased) + ' km';
+    document.getElementById('bizOldAudit').textContent = Math.round(52 + (72-52)*(1-eased)) + '%';
+    document.getElementById('bizOldRevLoss').textContent = '\u20B9' + (Math.round(2.8 * eased * 10)/10).toFixed(1) + 'L';
+
+    document.getElementById('bizNewRiders').textContent = Math.round(5 * eased);
+    document.getElementById('bizNewRejects').textContent = Math.round(0.5 * eased * 10)/10 + '%';
+    document.getElementById('bizNewCost').textContent = '\u20B9' + Math.round(14 * eased);
+    document.getElementById('bizNewFleetKm').textContent = Math.round(90 * eased) + ' km';
+    document.getElementById('bizNewAudit').textContent = Math.round(100 * eased) + '%';
+    document.getElementById('bizNewRevSave').textContent = '\u20B9' + (Math.round(4.2 * eased * 10)/10).toFixed(1) + 'L';
+  }
+
+  function tick() {
+    if(!simRunning) return;
+    simTime += 1;
+    if(simTime > SIM_END) { endSim(); return; }
+
+    let progress = (simTime - 390) / (SIM_END - 390);
+
+    // Update clock
+    document.getElementById('simClock').textContent = formatTime(simTime);
+    document.getElementById('simProgress').style.width = (progress * 100) + '%';
+
+    // Process old events
+    while(oldIdx < oldEvents.length && oldEvents[oldIdx].t <= simTime) {
+      let e = oldEvents[oldIdx];
+      if(e.type==='home') { oldState.homes++; oldState.tubes += parseInt((e.msg.match(/(\d+) tubes/)||[0,2])[1]); }
+      if(e.temp !== undefined) oldState.temp = e.temp;
+      if(e.km !== undefined) oldState.km = e.km;
+      if(e.type==='hub') oldState.hubTrips++;
+      if(e.type==='alert') oldState.breaches++;
+      addLog('oldLog', e.t, e.msg, e.type);
+      oldIdx++;
+    }
+    // Process new events
+    while(newIdx < newEvents.length && newEvents[newIdx].t <= simTime) {
+      let e = newEvents[newIdx];
+      if(e.type==='home') { newState.homes++; newState.tubes += parseInt((e.msg.match(/(\d+) tubes/)||[0,2])[1]); }
+      if(e.temp !== undefined) newState.temp = e.temp;
+      if(e.km !== undefined) newState.km = e.km;
+      if(e.type==='lab') newState.km = e.km;
+      addLog('newLog', e.t, e.msg, e.type);
+      newIdx++;
+    }
+
+    // Interpolate old temp rising between events
+    if(simTime > 390 && oldState.temp < 12) {
+      // Temp rises between hub visits
+      let lastHub = 390;
+      for(let i=0;i<oldIdx;i++) { if(oldEvents[i].type==='hub') lastHub = oldEvents[i].t; }
+      let elapsed = simTime - lastHub;
+      let baseTemp = 4.0;
+      oldState.temp = Math.min(12, baseTemp + elapsed * 0.045);
+    }
+
+    // Update gauge displays
+    document.getElementById('oldTemp').innerHTML = oldState.temp.toFixed(1) + '&deg;C';
+    document.getElementById('oldTemp').style.color = oldState.temp > 8 ? '#E53E3E' : oldState.temp > 6 ? '#D69E2E' : '#4A5568';
+    document.getElementById('oldHomes').textContent = oldState.homes;
+    document.getElementById('oldKm').textContent = oldState.km + ' km';
+
+    document.getElementById('newTemp').innerHTML = newState.temp.toFixed(1) + '&deg;C';
+    document.getElementById('newHomes').textContent = newState.homes;
+    document.getElementById('newKm').textContent = newState.km + ' km';
+
+    // Draw maps
+    let oldRider = getRiderPos(oldEvents, oldIdx-1, simTime, oldHomes, true);
+    let goingToLab = newIdx > 0 && newEvents[newIdx-1] && (newEvents[newIdx-1].type==='lab' || newEvents[newIdx-1].type==='end');
+    let newRider = getRiderPos(newEvents, newIdx-1, simTime, newHomes, false);
+    drawMap('oldMap', oldHomes, oldState.homes, oldRider, oldState.hubTrips, true, false);
+    drawMap('newMap', newHomes, newState.homes, newRider, 0, false, goingToLab);
+
+    // Business panel
+    updateBizPanel(progress);
+
+    simTimer = setTimeout(tick, TICK_MS_BASE / speed);
+  }
+
+  function endSim() {
+    simRunning = false; simDone = true;
+    document.getElementById('simPlayIcon').innerHTML = '<polygon points="5,3 19,12 5,21"/>';
+    document.getElementById('simScoreboard').style.display = 'grid';
+    // Trigger reveal animation
+    document.querySelectorAll('.sim-score').forEach((el,i) => {
+      el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      el.style.transitionDelay = (i * 0.12) + 's';
+      setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 50);
+    });
+    // Final biz update
+    updateBizPanel(1);
+  }
+
+  function resetSim() {
+    simTime = 390; oldIdx = 0; newIdx = 0; simDone = false;
+    oldState = {temp:4.0,homes:0,km:0,hubTrips:0,tubes:0,breaches:0};
+    newState = {temp:4.0,homes:0,km:0,hubTrips:0,tubes:0,breaches:0};
+    document.getElementById('simClock').textContent = '6:30 AM';
+    document.getElementById('simProgress').style.width = '0%';
+    document.getElementById('oldLog').innerHTML = '';
+    document.getElementById('newLog').innerHTML = '';
+    document.getElementById('oldTemp').innerHTML = '4.0&deg;C';
+    document.getElementById('oldTemp').style.color = '';
+    document.getElementById('oldHomes').textContent = '0';
+    document.getElementById('oldKm').textContent = '0 km';
+    document.getElementById('newTemp').innerHTML = '4.0&deg;C';
+    document.getElementById('newHomes').textContent = '0';
+    document.getElementById('newKm').textContent = '0 km';
+    document.getElementById('simScoreboard').style.display = 'none';
+    drawMap('oldMap', oldHomes, 0, HUB, 0, true, false);
+    drawMap('newMap', newHomes, 0, HUB, 0, false, false);
+    updateBizPanel(0);
+  }
+
+  window.toggleSim = function() {
+    if(simDone) { resetSim(); }
+    if(simRunning) {
+      simRunning = false;
+      clearTimeout(simTimer);
+      document.getElementById('simPlayIcon').innerHTML = '<polygon points="5,3 19,12 5,21"/>';
+    } else {
+      simRunning = true;
+      document.getElementById('simPlayIcon').innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+      tick();
+    }
+  };
+
+  window.setSpeed = function(s) {
+    speed = s;
+    document.querySelectorAll('.sim-speed').forEach(b => b.classList.remove('active'));
+    document.getElementById('sp' + s + 'x').classList.add('active');
+  };
+
+  window.switchPerspective = function(view) {
+    document.querySelectorAll('.sim-ptab').forEach(t => t.classList.remove('active'));
+    if(view === 'rider') {
+      document.querySelectorAll('.sim-ptab')[0].classList.add('active');
+      document.getElementById('simRiderView').style.display = 'block';
+      document.getElementById('simBizView').classList.remove('visible');
+    } else {
+      document.querySelectorAll('.sim-ptab')[1].classList.add('active');
+      document.getElementById('simRiderView').style.display = 'block';
+      document.getElementById('simBizView').classList.add('visible');
+    }
+  };
+
+  // Initial draw
+  setTimeout(() => {
+    drawMap('oldMap', oldHomes, 0, HUB, 0, true, false);
+    drawMap('newMap', newHomes, 0, HUB, 0, false, false);
+  }, 200);
+
+  // Auto-start when section scrolls into view
+  const simObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !simRunning && !simDone) {
+        setTimeout(() => { if(!simRunning && !simDone) window.toggleSim(); }, 800);
+      }
+    });
+  }, { threshold: 0.3 });
+  const simSection = document.getElementById('blood-collection');
+  if(simSection) simObserver.observe(simSection);
+})();
+</script>
+</body>
+</html>
